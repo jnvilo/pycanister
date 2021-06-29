@@ -3,7 +3,7 @@ import os
 from setuptools import setup
 
 PACKAGE="pycanister"
-VERSION="0.0.1"
+VERSION="0.0.2"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 

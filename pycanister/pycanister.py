@@ -1,12 +1,9 @@
 import abc
 import requests
 import json
-
 from pprint import pprint
+
 from pprint import pformat
-
-
-flag = False
 class AttributeExists(Exception):
     pass
     
@@ -20,7 +17,9 @@ class PyCanister(object):
         self.__pycanister_attributes__ = []
         self.namespace_type = dict
 
-   
+    def keys(self):
+        return self.__pycanister_attributes__
+
     @classmethod
     def from_json(cls, json_str):
         data = json.loads(json_str)
@@ -54,12 +53,8 @@ class PyCanister(object):
             if type(value) in [int, str,bool] or (value == None):
                 setattr(pns, key,value)
             elif type(value) == dict:
-                if key == "comment":
-                    print(f"Processing comment: {value}")
                 setattr(pns, key, PyCanister.from_dict(value))
             elif type(value) == list:
-                if key == "comments":
-                    print(f"Processing {key}:{value}")
                 setattr(pns, key, PyCanister.from_list(value))
         return pns
 

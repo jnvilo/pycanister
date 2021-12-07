@@ -45,7 +45,9 @@ class PyCanister(object):
     @classmethod
     def from_dict(cls,data):
         pns = PyCanister()
+        print(data)
         for key,value in data.items():
+            print(f"Processing data: {data} ")
             if hasattr(cls, key):
                 msg = f"{key} is an internal attribute. Can not add this attribute"
                 raise AttributeExists(msg)
@@ -83,8 +85,12 @@ class PyCanister(object):
         d = {}
 
         for key in self.__pycanister_attributes__:
-            value = getattr(self, key)
-
+            if key == "customfield_11200":
+                pass
+            try:
+                value = getattr(self, key)
+            except AttributeError as e:
+                print("{e}, returning None")
             if type(value) == PyCanister:
                 #Handle converting pycanister contents to a dict
                 result = value.serialize()
@@ -95,6 +101,8 @@ class PyCanister(object):
             elif type(value) in (str, bool, float,int):
                 #everything else is just standard content.
                 result = value
+            elif value is None:
+                result = None
             else:
                 raise RuntimeError("Unhandled Type Exception")
 

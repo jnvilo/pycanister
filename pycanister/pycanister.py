@@ -1,3 +1,4 @@
+#updated
 import abc
 import requests
 import json
@@ -45,9 +46,7 @@ class PyCanister(object):
     @classmethod
     def from_dict(cls,data):
         pns = PyCanister()
-        print(data)
         for key,value in data.items():
-            print(f"Processing data: {data} ")
             if hasattr(cls, key):
                 msg = f"{key} is an internal attribute. Can not add this attribute"
                 raise AttributeExists(msg)
@@ -62,7 +61,7 @@ class PyCanister(object):
 
     def handle_serialize_list(self, l):
         result = []
-        for item in l:
+        for item in l :
             if type(item) == PyCanister:
                 result.append(item.serialize())
             elif type(item) == list:
